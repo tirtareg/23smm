@@ -1,5 +1,5 @@
 ---
-title: "SMMPTN 2022"
+title: "SMMPTN 2023"
 author: "Subbagian Registrasi"
 output: 
   flexdashboard::flex_dashboard:
