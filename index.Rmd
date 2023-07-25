@@ -393,6 +393,13 @@ data <- db %>%
             sudah = sum(registrasi == "registrasi", na.rm = T),
             belum = lulus - sudah,
             diterima = sum(nim == "diterima", na.rm = T))
+
+n_fak <- data %>%
+  group_by(fakultas) %>%
+  summarise(n = n()) %>%
+  mutate(kum = cumsum(n))
+kum <- n_fak$kum
+
 data <- data[, -1]
 
 data <- adorn_totals(data,where = "row", name = "Total")
@@ -407,13 +414,13 @@ kable(data, row.names = F) %>%
   kable_styling(bootstrap_options = "striped", full_width = F,
                 latex_options = "scale_down") %>%
   add_header_above(c(" " = 4, "Registrasi Online" = 4, " " = 1)) %>%
-  pack_rows("Hukum", 1, 1, label_row_css = "background-color: #666; color: #fff;") %>%
-  pack_rows("Keguruan dan Ilmu Pendidikan", 2, 19, label_row_css = "background-color: #666; color: #fff;") %>%
-  pack_rows("Teknik", 20, 26, label_row_css = "background-color: #666; color: #fff;") %>%
-  pack_rows("Pertanian", 27, 31, label_row_css = "background-color: #666; color: #fff;") %>%
-  pack_rows("Ekonomi dan Bisnis", 32, 35, label_row_css = "background-color: #666; color: #fff;") %>%
-  pack_rows("Ilmu Sosial dan Ilmu Politik", 36, 38, label_row_css = "background-color: #666; color: #fff;") %>%
-  pack_rows("Kedokteran", 39, 42, label_row_css = "background-color: #666; color: #fff;")
+  pack_rows("Hukum", 1, kum[1], label_row_css = "background-color: #666; color: #fff;") %>%
+  pack_rows("Keguruan dan Ilmu Pendidikan", kum[1]+1, kum[2], label_row_css = "background-color: #666; color: #fff;") %>%
+  pack_rows("Teknik", kum[2]+1, kum[3], label_row_css = "background-color: #666; color: #fff;") %>%
+  pack_rows("Pertanian", kum[3]+1, kum[4], label_row_css = "background-color: #666; color: #fff;") %>%
+  pack_rows("Ekonomi dan Bisnis", kum[4]+1, kum[5], label_row_css = "background-color: #666; color: #fff;") %>%
+  pack_rows("Ilmu Sosial dan Ilmu Politik", kum[5]+1, kum[6], label_row_css = "background-color: #666; color: #fff;") %>%
+  pack_rows("Kedokteran", kum[6]+1, kum[7], label_row_css = "background-color: #666; color: #fff;")
 
 
 data %>%
