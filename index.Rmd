@@ -253,7 +253,7 @@ Row
 ### **Statistik Keketatan Program Studi**
 
 ```{r}
-data <- read_excel("G:/My Drive/#PMB/2023/03_SMM/23smm/Statistik_Keketatan_Prodi_smmptn_2023.xlsx")
+data <- read_excel("Statistik_Keketatan_Prodi_smmptn_2023.xlsx")
 data <- data[,-2]
 
 names(data) <- c("No", "Program Studi", "Jenjang", "Peminat", "Diterima", "Keketatan (%)", "Peminat", "% Peminat", "Peminat", "% Peminat")
